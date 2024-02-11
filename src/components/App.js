@@ -1,46 +1,119 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
-import './../styles/App.css';
+import "./../styles/App.css";
+
+const cities = [
+  // Andhra Pradesh
+  "Visakhapatnam", "Vijayawada", "Guntur", "Nellore", "Kurnool", "Kakinada", "Rajahmundry", "Tirupati", "Kadapa", "Anantapur",
+
+  // Arunachal Pradesh
+  "Itanagar", "Naharlagun", "Pasighat", "Daporijo", "Ziro", "Along", "Tezu", "Bomdila", "Aalo", "Khonsa",
+
+  // Assam
+  "Guwahati", "Silchar", "Dibrugarh", "Jorhat", "Nagaon", "Tinsukia", "Tezpur", "Bongaigaon", "Karimganj", "Hailakandi",
+
+  // Bihar
+  "Patna", "Gaya", "Bhagalpur", "Muzaffarpur", "Darbhanga", "Arrah", "Bihar Sharif", "Katihar", "Munger", "Chhapra",
+
+  // Chhattisgarh
+  "Raipur", "Bhilai", "Bilaspur", "Korba", "Durg", "Raigarh", "Jagdalpur", "Ambikapur", "Dhamtari", "Janjgir",
+
+  // Goa
+  "Panaji", "Margoa", "Vasco da Gama", "Mapusa", "Ponda", "Bicholim", "Curchorem", "Sanguem", "Quepem", "Cuncolim",
+
+  // Gujarat
+  "Ahmedabad", "Surat", "Vadodara", "Rajkot", "Bhavnagar", "Jamnagar", "Junagadh", "Gandhinagar", "Gandhidham", "Anand",
+
+  // Haryana
+  "Faridabad", "Gurgaon", "Panipat", "Ambala", "Yamunanagar", "Rohtak", "Hisar", "Karnal", "Sonipat", "Panchkula",
+
+  // Himachal Pradesh
+  "Shimla", "Solan", "Dharamshala", "Mandi", "Palampur", "Kullu", "Chamba", "Una", "Bilaspur", "Hamirpur",
+
+  // Jharkhand
+  "Ranchi", "Jamshedpur", "Dhanbad", "Bokaro", "Hazaribagh", "Deoghar", "Giridih", "Ramgarh", "Dumka", "Chaibasa",
+
+  // Karnataka
+  "Bangalore", "Mysore", "Hubli", "Mangalore", "Belgaum", "Gulbarga", "Davanagere", "Bellary", "Bijapur", "Shimoga",
+
+  // Kerala
+  "Thiruvananthapuram", "Kochi", "Kozhikode", "Thrissur", "Kollam", "Palakkad", "Alappuzha", "Kannur", "Kottayam", "Kasaragod",
+
+  // Madhya Pradesh
+  "Indore", "Bhopal", "Jabalpur", "Gwalior", "Ujjain", "Sagar", "Dewas", "Satna", "Ratlam", "Rewa",
+
+  // Maharashtra
+  "Mumbai", "Pune", "Nagpur", "Thane", "Nashik", "Kalyan-Dombivali", "Vasai-Virar", "Aurangabad", "Solapur", "Navi Mumbai",
+
+  // Manipur
+  "Imphal", "Thoubal", "Bishnupur", "Churachandpur", "Ukhrul", "Kakching", "Senapati", "Tamenglong", "Jiribam", "Chandel",
+
+  // Meghalaya
+  "Shillong", "Tura", "Jowai", "Baghmara", "Williamnagar", "Nongstoin", "Resubelpara", "Mairang", "Khliehriat", "Amlarem",
+
+  // Mizoram
+  "Aizawl", "Lunglei", "Saiha", "Champhai", "Kolasib", "Serchhip", "Lawngtlai", "Hnahthial", "Saitual", "Khawzawl",
+
+  // Nagaland
+  "Kohima", "Dimapur", "Mokokchung", "Tuensang", "Wokha", "Zunheboto", "Mon", "Phek", "Kiphire", "Longleng",
+
+  // Odisha
+  "Bhubaneswar", "Cuttack", "Rourkela", "Berhampur", "Sambalpur", "Puri", "Balasore", "Bhadrak", "Baripada", "Jharsuguda",
+
+  // Punjab
+  "Ludhiana", "Amritsar", "Jalandhar", "Patiala", "Bathinda", "Hoshiarpur", "Mohali", "Batala", "Pathankot", "Moga",
+
+  // Rajasthan
+  "Jaipur", "Jodhpur", "Kota", "Bikaner", "Ajmer", "Udaipur", "Bhilwara", "Alwar", "Bharatpur", "Sikar",
+
+  // Sikkim
+  "Gangtok", "Namchi", "Gyalshing", "Mangan", "Singtam", "Rangpo", "Nepanagar", "Ravangla", "Rhenock", "Jorethang",
+
+  // Tamil Nadu
+  "Chennai", "Coimbatore", "Madurai", "Tiruchirappalli", "Salem", "Tirunelveli", "Tiruppur", "Vellore", "Thoothukudi", "Nagercoil",
+
+  // Telangana
+  "Hyderabad", "Warangal", "Nizamabad", "Karimnagar", "Ramagundam", "Khammam", "Mahbubnagar", "Nalgonda", "Adilabad", "Siddipet",
+
+  // Tripura
+  "Agartala", "Dharmanagar", "Khowai", "Udaipur", "Ambassa", "Kailasahar", "Belonia", "Sonamura", "Santirbazar", "Kamalpur",
+
+  // Uttar Pradesh
+  "Lucknow", "Kanpur", "Ghaziabad", "Agra", "Varanasi", "Allahabad", "Meerut", "Bare" ]
+
 
 class App extends Component {
   static propTypes = {
-    suggestions: PropTypes.instanceOf(Array)
+    suggestions: PropTypes.instanceOf(Array),
   };
 
   static defaultProps = {
-    suggestions: []
+    suggestions: [],
   };
 
   constructor(props) {
     super(props);
 
     this.state = {
-      // The active selection's index
       activeSuggestion: 0,
-      // The suggestions that match the user's input
       filteredSuggestions: [],
-      // Whether or not the suggestion list is shown
       showSuggestions: false,
-      // What the user has entered
-      userInput: ""
+      userInput: "",
     };
   }
 
   onChange = (e) => {
-    const { suggestions } = this.props;
     const userInput = e.currentTarget.value;
 
-    // Filter our suggestions that don't contain the user's input
-    const filteredSuggestions = suggestions.filter(
-      (suggestion) =>
-        suggestion.toLowerCase().indexOf(userInput.toLowerCase()) > -1
+    const filteredSuggestions = cities.filter(
+      (city) => city.toLowerCase().indexOf(userInput.toLowerCase()) > -1
     );
 
     this.setState({
       activeSuggestion: 0,
       filteredSuggestions,
       showSuggestions: true,
-      userInput: e.currentTarget.value
+      userInput,
     });
   };
 
@@ -49,31 +122,26 @@ class App extends Component {
       activeSuggestion: 0,
       filteredSuggestions: [],
       showSuggestions: false,
-      userInput: e.currentTarget.innerText
+      userInput: e.currentTarget.innerText,
     });
   };
 
   onKeyDown = (e) => {
     const { activeSuggestion, filteredSuggestions } = this.state;
 
-    // User pressed the enter key
     if (e.keyCode === 13) {
       this.setState({
         activeSuggestion: 0,
         showSuggestions: false,
-        userInput: filteredSuggestions[activeSuggestion]
+        userInput: filteredSuggestions[activeSuggestion],
       });
-    }
-    // User pressed the up arrow
-    else if (e.keyCode === 38) {
+    } else if (e.keyCode === 38) {
       if (activeSuggestion === 0) {
         return;
       }
 
       this.setState({ activeSuggestion: activeSuggestion - 1 });
-    }
-    // User pressed the down arrow
-    else if (e.keyCode === 40) {
+    } else if (e.keyCode === 40) {
       if (activeSuggestion - 1 === filteredSuggestions.length) {
         return;
       }
@@ -91,8 +159,8 @@ class App extends Component {
         activeSuggestion,
         filteredSuggestions,
         showSuggestions,
-        userInput
-      }
+        userInput,
+      },
     } = this;
 
     let suggestionsListComponent;
@@ -100,17 +168,20 @@ class App extends Component {
     if (showSuggestions && userInput) {
       if (filteredSuggestions.length) {
         suggestionsListComponent = (
-          <ul class="suggestions">
+          <ul className="suggestions">
             {filteredSuggestions.map((suggestion, index) => {
               let className;
 
-              // Flag the active suggestion with a class
               if (index === activeSuggestion) {
                 className = "suggestion-active";
               }
 
               return (
-                <li className={className} key={suggestion} onClick={onClick}>
+                <li
+                  className={className}
+                  key={suggestion}
+                  onClick={onClick}
+                >
                   {suggestion}
                 </li>
               );
@@ -119,7 +190,7 @@ class App extends Component {
         );
       } else {
         suggestionsListComponent = (
-          <div class="no-suggestions">
+          <div className="no-suggestions">
             <em>No suggestions, you're on your own!</em>
           </div>
         );
